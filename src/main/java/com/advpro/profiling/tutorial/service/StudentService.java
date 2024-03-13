@@ -7,9 +7,7 @@ import com.advpro.profiling.tutorial.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author muhammad.khadafi
@@ -26,8 +24,15 @@ public class StudentService {
     public List<StudentCourse> getAllStudentsWithCourses() {
         List<Student> students = studentRepository.findAll();
         List<StudentCourse> studentCourses = new ArrayList<>();
+        Map<Long, List<StudentCourse>> studentCourseMap = new HashMap<>();
+        List<StudentCourse> allStudentCourses = studentCourseRepository.findAll();
+        for (StudentCourse studentCourse : allStudentCourses) {
+            Long studentId = studentCourse.getStudent().getId();
+            studentCourseMap.computeIfAbsent(studentId, k -> new ArrayList<>()).add(studentCourse);
+        }
         for (Student student : students) {
-            List<StudentCourse> studentCoursesByStudent = studentCourseRepository.findByStudentId(student.getId());
+            List<StudentCourse> studentCoursesByStudent;
+            studentCoursesByStudent = studentCourseMap.getOrDefault(student.getId(), Collections.emptyList());
             for (StudentCourse studentCourseByStudent : studentCoursesByStudent) {
                 StudentCourse studentCourse = new StudentCourse();
                 studentCourse.setStudent(student);
@@ -60,4 +65,3 @@ public class StudentService {
         return result.substring(0, result.length() - 2);
     }
 }
-
