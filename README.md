@@ -12,6 +12,16 @@
 **/highest-gpa**
 ![img_3.png](img_3.png)
 
+## After Optimization:
+
+**/all-student-name**
+![img.png](img.png)
+
+**/highest-gpa**
+![img_1.png](img_1.png)
+
+After optimizing the code, the response time for the `/all-student-name` endpoint decreased over 100%, and the response time for the `/highest-gpa` endpoint didn't change so much.
+
 ## Reflection:
 #### 1. What is the difference between the approach of performance testing with JMeter and profiling with IntelliJ Profiler in the context of optimizing application performance?
     Answer:
